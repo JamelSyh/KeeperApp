@@ -17,6 +17,8 @@ import {
   GoogleLoginButton,
 } from "react-social-login-buttons";
 
+import * as api from "../api/users";
+
 function Copyright(props) {
   return (
     <Typography
@@ -65,12 +67,38 @@ const theme = createTheme({
 
 export default function SignIn() {
   const handleSubmit = (event) => {
+
+    submitLogin(event);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+  };
+
+  const [userInfo, setUserInfo] = React.useState({
+    username: "",
+    password: "",
+  });
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setUserInfo((prevNote) => {
+      return {
+        ...prevNote,
+        [name]: value,
+      };
     });
+  }
+
+  const submitLogin = async (event) => {
+    const response = await api.postLogin(userInfo);
+    console.log("response : ");
+    console.log(response);
+    // setUserInfo((prevNotes) => {
+    //   return [...prevNotes, response.data];
+    // });
   };
 
   return (

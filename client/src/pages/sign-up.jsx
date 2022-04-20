@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,6 +17,7 @@ import {
   FacebookLoginButton,
   GoogleLoginButton,
 } from "react-social-login-buttons";
+import * as api from "../api/users";
 
 function Copyright(props) {
   return (
@@ -65,12 +67,35 @@ const theme = createTheme({
 
 export default function SignUp() {
   const handleSubmit = (event) => {
+    submitRegister(event);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+  };
+
+  let navigate = useNavigate();
+
+  const [userInfo, setUserInfo] = React.useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setUserInfo((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
     });
+  }
+
+  const submitRegister = async () => {
+    console.log(userInfo);
+    const response = await api.postRegister(userInfo);
+    if (response.status === 200) navigate("/login");
   };
 
   return (
@@ -112,43 +137,51 @@ export default function SignUp() {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       autoComplete="given-name"
+                      onChange={handleChange}
                       name="firstName"
                       required
                       fullWidth
                       id="firstName"
                       label="First Name"
                       autoFocus
+                      value={userInfo.firstName}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
                       fullWidth
+                      onChange={handleChange}
                       id="lastName"
                       label="Last Name"
                       name="lastName"
                       autoComplete="family-name"
+                      value={userInfo.lastName}
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
                       required
                       fullWidth
+                      onChange={handleChange}
                       id="email"
                       label="Email Address"
                       name="email"
                       autoComplete="email"
+                      value={userInfo.email}
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
                       required
                       fullWidth
+                      onChange={handleChange}
                       name="password"
                       label="Password"
                       type="password"
                       id="password"
                       autoComplete="new-password"
+                      value={userInfo.password}
                     />
                   </Grid>
                   <Grid item xs={12}>

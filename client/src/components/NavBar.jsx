@@ -5,25 +5,24 @@ import HighLight from "@mui/icons-material/Highlight";
 export default function NavBar() {
   let navigate = useNavigate();
   return (
-    <nav class=" navbar navbar-expand-lg navbar-light bg-Warning ">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">
+    <nav className=" navbar navbar-expand-lg navbar-light bg-Warning ">
+      <div className="container-fluid">
+        <a className="navbar-brand" href="/">
           <HighLight />
           Keeper
         </a>
         <button
-          class="navbar-toggler "
+          className="navbar-toggler "
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
+          data-bs-target="navbarSupportedContent"
           aria-controls="navbarSupportedContent"
-          aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
         <div
-          class=" nav-flex collapse navbar-collapse  "
+          className=" nav-flex collapse navbar-collapse  "
           id="navbarSupportedContent"
         >
           <button
